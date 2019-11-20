@@ -1,86 +1,86 @@
 require 'test_helper'
 
-describe 'ae_easy-text' do
+describe 'dh_easy-text' do
   describe 'unit test' do
     it 'should generate a consistent hash' do
-      hash_a = AeEasy::Text.hash 'abc'
-      hash_b = AeEasy::Text.hash 'abc'
+      hash_a = DhEasy::Text.hash 'abc'
+      hash_b = DhEasy::Text.hash 'abc'
       assert_kind_of String, hash_a
       refute_empty hash_a
       assert_equal hash_b, hash_a
     end
 
     it 'should generate a unique hash' do
-      hash_a = AeEasy::Text.hash 'aaa'
-      hash_b = AeEasy::Text.hash 'bbb'
+      hash_a = DhEasy::Text.hash 'aaa'
+      hash_b = DhEasy::Text.hash 'bbb'
       assert_kind_of String, hash_a
       refute_empty hash_a
       refute_equal hash_b, hash_a
     end
 
     it 'should generate a consistent hash when number' do
-      hash_a = AeEasy::Text.hash 123
-      hash_b = AeEasy::Text.hash 123
+      hash_a = DhEasy::Text.hash 123
+      hash_b = DhEasy::Text.hash 123
       assert_kind_of String, hash_a
       refute_empty hash_a
       assert_equal hash_b, hash_a
     end
 
     it 'should generate a unique hash when number' do
-      hash_a = AeEasy::Text.hash 111
-      hash_b = AeEasy::Text.hash 222
+      hash_a = DhEasy::Text.hash 111
+      hash_b = DhEasy::Text.hash 222
       assert_kind_of String, hash_a
       refute_empty hash_a
       refute_equal hash_b, hash_a
     end
 
     it 'should generate a consistent hash when hash' do
-      hash_a = AeEasy::Text.hash({'aaa' => 111, 'bbb' => 'BBB'})
-      hash_b = AeEasy::Text.hash({'bbb' => 'BBB', 'aaa' => 111})
+      hash_a = DhEasy::Text.hash({'aaa' => 111, 'bbb' => 'BBB'})
+      hash_b = DhEasy::Text.hash({'bbb' => 'BBB', 'aaa' => 111})
       assert_kind_of String, hash_a
       refute_empty hash_a
       assert_equal hash_b, hash_a
     end
 
     it 'should generate a unique hash when hash' do
-      hash_a = AeEasy::Text.hash({'aaa' => 'AAA'})
-      hash_b = AeEasy::Text.hash({'aaa' => '111'})
+      hash_a = DhEasy::Text.hash({'aaa' => 'AAA'})
+      hash_b = DhEasy::Text.hash({'aaa' => '111'})
       assert_kind_of String, hash_a
       refute_empty hash_a
       refute_equal hash_b, hash_a
     end
 
     it 'should encode html entities' do
-      data = AeEasy::Text.encode_html 'abc&abc>'
+      data = DhEasy::Text.encode_html 'abc&abc>'
       expected = 'abc&amp;abc&gt;'
       assert_equal expected, data
     end
 
     it 'should decode html entities' do
-      data = AeEasy::Text.decode_html 'abc&amp;abc&gt;'
+      data = DhEasy::Text.decode_html 'abc&amp;abc&gt;'
       expected = 'abc&abc>'
       assert_equal expected, data
     end
 
     describe 'should strip data' do
       it 'with spaces' do
-        data = AeEasy::Text.strip '    abc     '
+        data = DhEasy::Text.strip '    abc     '
         expected = 'abc'
         assert_equal expected, data
       end
 
       it 'and return nil when nil' do
-        assert_nil AeEasy::Text.strip(nil)
+        assert_nil DhEasy::Text.strip(nil)
       end
 
       it 'and decode html entities' do
-        data = AeEasy::Text.strip '    abc&amp;&gt;     '
+        data = DhEasy::Text.strip '    abc&amp;&gt;     '
         expected = 'abc&>'
         assert_equal expected, data
       end
 
       it 'with bad encoding' do
-        data = AeEasy::Text.strip "\xaa abc".force_encoding('ASCII')
+        data = DhEasy::Text.strip "\xaa abc".force_encoding('ASCII')
         expected = "\ufffd abc"
         assert_equal expected, data
       end
@@ -90,14 +90,14 @@ describe 'ae_easy-text' do
       html = '<span><i><b>  hello   </b><span>'
       element = Nokogiri::HTML.fragment html
       data = {}
-      AeEasy::Text.default_parser element, data, :aaa
+      DhEasy::Text.default_parser element, data, :aaa
       expected = 'hello'
       assert_equal expected, data[:aaa]
     end
 
     it 'should do nothing with default parser when element is nil' do
       data = {}
-      AeEasy::Text.default_parser nil, data, :aaa
+      DhEasy::Text.default_parser nil, data, :aaa
       expected = {}
       assert_equal expected, data
     end
@@ -128,7 +128,7 @@ describe 'ae_easy-text' do
         name: 1
       }
       element = Nokogiri::HTML.fragment html
-      data = AeEasy::Text.parse_content(
+      data = DhEasy::Text.parse_content(
         html: element,
         selector: 'tbody tr',
         header_map: header_map
@@ -174,12 +174,12 @@ describe 'ae_easy-text' do
       }
       element = Nokogiri::HTML.fragment html
       my_type_parser = lambda do |element, data, key|
-        text = AeEasy::Text.strip element.css('.stuff').text.gsub(/[0-9]/, '')
-        numbers = AeEasy::Text.strip element.css('.stuff').text.gsub(/[^0-9]/, '')
+        text = DhEasy::Text.strip element.css('.stuff').text.gsub(/[0-9]/, '')
+        numbers = DhEasy::Text.strip element.css('.stuff').text.gsub(/[^0-9]/, '')
         data[key] = text
         data[:numbers] = numbers
       end
-      data = AeEasy::Text.parse_content(
+      data = DhEasy::Text.parse_content(
         html: element,
         selector: 'tbody tr',
         header_map: header_map,
@@ -216,7 +216,7 @@ describe 'ae_easy-text' do
         name: 1
       }
       element = Nokogiri::HTML.fragment html
-      data = AeEasy::Text.parse_content(
+      data = DhEasy::Text.parse_content(
         first_row_header: true,
         html: element,
         selector: 'tr',
@@ -236,7 +236,7 @@ describe 'ae_easy-text' do
         id: 'hello',
         name: 'bla'
       }
-      data = AeEasy::Text.translate_label_to_key element, label_map
+      data = DhEasy::Text.translate_label_to_key element, label_map
       expected = :id
       assert_equal expected, data
     end
@@ -248,7 +248,7 @@ describe 'ae_easy-text' do
         id: 'aaa',
         name: 'bla'
       }
-      data = AeEasy::Text.translate_label_to_key element, label_map
+      data = DhEasy::Text.translate_label_to_key element, label_map
       assert_nil data
     end
 
@@ -257,7 +257,7 @@ describe 'ae_easy-text' do
         id: 'aaa',
         name: 'bla'
       }
-      data = AeEasy::Text.translate_label_to_key nil, label_map
+      data = DhEasy::Text.translate_label_to_key nil, label_map
       assert_nil data
     end
 
@@ -287,7 +287,7 @@ describe 'ae_easy-text' do
         name: 'my text'
       }
       element = Nokogiri::HTML.fragment html
-      data = AeEasy::Text.parse_header_map(
+      data = DhEasy::Text.parse_header_map(
         html: element,
         selector: 'thead tr',
         column_key_label_map: label_map,
@@ -321,7 +321,7 @@ describe 'ae_easy-text' do
         name: /my\s+text/
       }
       element = Nokogiri::HTML.fragment html
-      data = AeEasy::Text.parse_header_map(
+      data = DhEasy::Text.parse_header_map(
         first_row_header: true,
         html: element,
         selector: 'tr',
@@ -352,7 +352,7 @@ describe 'ae_easy-text' do
         'name' => 'product name'
       }
       element = Nokogiri::HTML.fragment html
-      data = AeEasy::Text.parse_vertical_table(
+      data = DhEasy::Text.parse_vertical_table(
         html: element,
         row_selector: 'tr',
         header_selector: 'td:first',
@@ -397,7 +397,7 @@ describe 'ae_easy-text' do
         'name' => 'my text'
       }
       element = Nokogiri::HTML.fragment html
-      data = AeEasy::Text.parse_table(
+      data = DhEasy::Text.parse_table(
         html: element,
         header_selector: 'thead tr',
         content_selector: 'tbody tr',
@@ -438,7 +438,7 @@ describe 'ae_easy-text' do
         product_name: /my\s+text/
       }
       element = Nokogiri::HTML.fragment html
-      data = AeEasy::Text.parse_table(
+      data = DhEasy::Text.parse_table(
         first_row_header: true,
         html: element,
         header_selector: 'tr',
@@ -492,12 +492,12 @@ describe 'ae_easy-text' do
       }
       element = Nokogiri::HTML.fragment html
       my_type_parser = lambda do |element, data, key|
-        text = AeEasy::Text.strip element.css('.stuff').text.gsub(/[0-9]/, '')
-        numbers = AeEasy::Text.strip element.css('.stuff').text.gsub(/[^0-9]/, '')
+        text = DhEasy::Text.strip element.css('.stuff').text.gsub(/[0-9]/, '')
+        numbers = DhEasy::Text.strip element.css('.stuff').text.gsub(/[^0-9]/, '')
         data[key] = text
         data[:numbers] = numbers
       end
-      data = AeEasy::Text.parse_table(
+      data = DhEasy::Text.parse_table(
         html: element,
         header_selector: 'thead tr',
         content_selector: 'tbody tr',

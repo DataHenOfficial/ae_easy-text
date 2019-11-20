@@ -1,16 +1,16 @@
-[![Documentation](http://img.shields.io/badge/docs-rdoc.info-blue.svg)](http://rubydoc.org/gems/ae_easy-text/frames)
-[![Gem Version](https://badge.fury.io/rb/ae_easy-text.svg)](http://github.com/answersengine/ae_easy-text/releases)
+[![Documentation](http://img.shields.io/badge/docs-rdoc.info-blue.svg)](http://rubydoc.org/gems/dh_easy-text/frames)
+[![Gem Version](https://badge.fury.io/rb/dh_easy-text.svg)](http://github.com/DataHenOfficial/dh_easy-text/releases)
 [![License](http://img.shields.io/badge/license-MIT-yellowgreen.svg)](#license)
 
-# AeEasy text module
+# DhEasy text module
 ## Description
 
-AeEasy text is part of AeEasy gem collection. It provides multiple text parsing helpers to ease common text parsing user cases.
+DhEasy text is part of DhEasy gem collection. It provides multiple text parsing helpers to ease common text parsing user cases.
 
 Install gem:
-```gem install 'ae_easy-text'```
+```gem install 'dh_easy-text'```
 
 Require gem:
-```require 'ae_easy/text'```
+```require 'dh_easy/text'```
 
-Documentation can be found [here](http://rubydoc.org/gems/ae_easy-text/frames).
+Documentation can be found [here](http://rubydoc.org/gems/dh_easy-text/frames).

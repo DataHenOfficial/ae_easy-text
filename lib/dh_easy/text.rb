@@ -1,10 +1,10 @@
 require 'cgi'
 require 'json'
 require 'digest/sha1'
-require 'ae_easy/core'
-require 'ae_easy/text/version'
+require 'dh_easy/core'
+require 'dh_easy/text/version'
 
-module AeEasy
+module DhEasy
   module Text
     # Create a hash from object
     #
