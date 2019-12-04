@@ -8,9 +8,13 @@
 DhEasy text is part of DhEasy gem collection. It provides multiple text parsing helpers to ease common text parsing user cases.
 
 Install gem:
-```gem install 'dh_easy-text'```
+```ruby
+gem install 'dh_easy-text'
+```
 
 Require gem:
-```require 'dh_easy/text'```
+```ruby
+require 'dh_easy/text'
+```
 
 Documentation can be found [here](http://rubydoc.org/gems/dh_easy-text/frames).
